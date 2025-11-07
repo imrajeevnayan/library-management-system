@@ -34,11 +34,7 @@ spring.h2.console.enabled=true
 # =              OAUTH2 / GOOGLE LOGIN
 # =============================================
 
-# IMPORTANT: Replace these with your actual Google Client ID and Secret
-# You get these from the Google Cloud Console.
-# NEVER commit your real secrets to version control!
-spring.security.oauth2.client.registration.google.client-id=YOUR_GOOGLE_CLIENT_ID
-spring.security.oauth2.client.registration.google.client-secret=YOUR_GOOGLE_CLIENT_SECRET
+
 
 # These are the 'permissions' you are asking for from the user's Google account.
 spring.security.oauth2.client.registration.google.scope=email,profile
