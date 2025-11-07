@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="images/home-page.png" alt="Home Page Screenshot" width="800">
+  <img src="images/home.png" alt="Home Page Screenshot" width="800">
 </div>
 
 # 📚 Library Management System
@@ -147,3 +147,4 @@ Contributions are what make the open-source community amazing! To contribute:
 ## 📄 License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
