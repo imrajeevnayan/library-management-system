@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      th:replace="layout :: ~{::content}" th:with="title='Welcome to Our Library'">
+<head th:fragment="head">
+    <!-- Not needed for this page -->
+</head>
+<main th:fragment="content">
+    <!-- Hero Section -->
+    <header class="bg-gradient-to-r from-indigo-600 to-purple-700 text-white">
+        <div class="max-w-7xl mx-auto py-24 px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight">Your Gateway to a World of Books</h1>
+                <p class="mt-6 max-w-2xl mx-auto text-xl text-indigo-200">Manage your personal library, track your reading journey, and discover new adventures.</p>
+                <div class="mt-10 flex justify-center space-x-4">
+                    <a href="/signup" class="bg-white text-indigo-700 font-bold py-3 px-6 rounded-md shadow-lg hover:bg-gray-100 transition duration-300">Get Started</a>
+                    <a href="/login" class="border-2 border-white text-white font-bold py-3 px-6 rounded-md hover:bg-white hover:text-indigo-700 transition duration-300">Sign In</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Featured Books Section -->
+    <section class="py-16 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl">Featured in Our Library</h2>
+                <p class="mt-4 text-lg text-gray-600">Explore some of the popular books available in our collection.</p>
+            </div>
+
+            <div class="mt-12 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+                <!-- Book Card -->
+                <div th:each="book : ${featuredBooks}" class="flex flex-col bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300">
+                    <div class="flex-1 p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="flex-shrink-0 bg-indigo-100 rounded-lg p-3">
+                                <i class="fas fa-book text-indigo-600 text-xl"></i>
+                            </div>
+                            <div class="ml-4">
+                                <h3 th:text="${book.title}" class="text-lg font-medium text-gray-900">Book Title</h3>
+                                <p th:text="${book.author}" class="text-sm text-gray-500">Author Name</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center text-sm text-gray-500">
+                            <i class="fas fa-barcode mr-2"></i>
+                            <span th:text="${book.isbn}">ISBN Number</span>
+                        </div>
+                    </div>
+                    <div class="bg-gray-50 px-6 py-3">
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm font-medium text-green-600">Available</span>
+                            <a href="/login" class="text-sm font-medium text-indigo-600 hover:text-indigo-500">Login to Borrow</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+</html>

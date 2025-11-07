@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      th:with="title=${title}" th:lang="${lang}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${title}">Library Management System</title>
+    <link rel="stylesheet" th:href="@{/css/tailwind.min.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col">
+<!-- Navigation -->
+<nav class="bg-indigo-600 shadow-lg">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-16">
+            <div class="flex items-center">
+                <a href="/" class="flex-shrink-0 flex items-center">
+                    <i class="fas fa-book-open text-white text-2xl mr-2"></i>
+                    <span class="text-white font-bold text-xl">Library Management</span>
+                </a>
+            </div>
+            <div class="flex items-center space-x-4">
+                <a href="/" class="text-white hover:bg-indigo-700 px-3 py-2 rounded-md text-sm font-medium">Home</a>
+
+                <!-- User Profile Dropdown -->
+                <div class="relative" sec:authorize="isAuthenticated()">
+                    <div class="flex items-center">
+                        <img th:src="${user.avatarUrl}" class="h-8 w-8 rounded-full mr-2" alt="User Avatar">
+                        <span th:text="${user.name}" class="text-white text-sm mr-2"></span>
+                        <button id="user-menu-button" class="text-white hover:bg-indigo-700 p-1 rounded-full">
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                    </div>
+                    <!-- Dropdown Menu -->
+                    <div id="user-menu" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10">
+                        <a href="/dashboard" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Dashboard</a>
+                        <form th:action="@{/logout}" method="post">
+                            <button type="submit" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Logout</button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Login/Signup Buttons -->
+                <div sec:authorize="!isAuthenticated()">
+                    <a href="/login" class="text-white hover:bg-indigo-700 px-3 py-2 rounded-md text-sm font-medium">Login</a>
+                    <a href="/signup" class="bg-indigo-500 text-white hover:bg-indigo-400 px-3 py-2 rounded-md text-sm font-medium">Sign Up</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- Main Content -->
+<main class="flex-grow">
+    <div th:fragment="content">
+        <!-- Content from other pages is inserted here -->
+    </div>
+</main>
+
+<!-- Footer -->
+<footer class="bg-gray-800 text-white py-4 mt-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between">
+            <div>&copy; 2023 Library Management System</div>
+            <div>
+                <a href="#" class="text-gray-400 hover:text-white mx-2">Privacy</a>
+                <a href="#" class="text-gray-400 hover:text-white mx-2">Terms</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script>
+    // User dropdown toggle
+    const userMenuButton = document.getElementById('user-menu-button');
+    const userMenu = document.getElementById('user-menu');
+    if(userMenuButton) {
+        userMenuButton.addEventListener('click', function() {
+            userMenu.classList.toggle('hidden');
+        });
+    }
+</script>
+</body>
+</html>
