@@ -1,20 +1,76 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-      th:replace="layout :: ~{::main}" th:with="title='Welcome to Our Library'">
+      th:replace="layout :: ~{::content}"
+      th:with="title='Welcome to Our Library'">
 <head th:fragment="head">
-    <!-- Not needed for this page -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${title}">Library Management System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Custom animations for a modern feel */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out forwards;
+        }
+    </style>
 </head>
-<main th:fragment="main">
+<body class="bg-gray-100 min-h-screen flex flex-col">
+<!-- Navigation -->
+<nav class="bg-indigo-600 shadow-lg sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-16">
+            <div class="flex items-center">
+                <a href="/" class="flex-shrink-0 flex items-center text-white hover:bg-indigo-700 transition-colors duration-300">
+                    <i class="fas fa-book-open text-2xl mr-3"></i>
+                    <span class="text-white font-bold text-xl">Library Management</span>
+                </a>
+            </div>
+            <div class="hidden md:flex md:items-center md:space-x-4 space-x-4">
+                <!-- User Profile Dropdown -->
+                <div class="relative" sec:authorize="isAuthenticated()">
+                    <div class="flex items-center">
+                        <img th:src="${user.avatarUrl}" class="h-8 w-8 rounded-full mr-2" alt="User Avatar">
+                        <span th:text="${user.name}" class="text-white text-sm mr-2"></span>
+                        <button id="user-menu-button" class="text-white hover:bg-indigo-700 p-1 rounded-full">
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                    </div>
+                    <!-- Dropdown Menu -->
+                    <div id="user-menu" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10">
+                        <a href="/dashboard" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Dashboard</a>
+                        <form th:action="@{/logout}" method="post">
+                            <button type="submit" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Logout</button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Login/Signup Buttons -->
+                <div sec:authorize="!isAuthenticated()">
+                    <a href="/login" class="text-white hover:bg-indigo-700 px-3 py-2 rounded-md text-sm font-medium">Login</a>
+                    <a href="/signup" class="bg-indigo-500 text-white hover:bg-indigo-400 px-3 py-2 rounded-md text-sm font-medium">Sign Up</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- Main Content -->
+<main class="flex-grow">
     <!-- Hero Section -->
-    <header class="bg-gradient-to-r from-indigo-600 to-purple-700 text-white">
+    <header class="bg-gradient-to-r from-indigo-600 via-purple-700 to-white text-white">
         <div class="max-w-7xl mx-auto py-24 px-4 sm:px-6 lg:px-8">
             <div class="text-center">
-                <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight">Your Gateway to a World of Books</h1>
+                <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight fade-in">Your Gateway to a World of Books</h1>
                 <p class="mt-6 max-w-2xl mx-auto text-xl text-indigo-200">Manage your personal library, track your reading journey, and discover new adventures.</p>
                 <div class="mt-10 flex justify-center space-x-4">
-                    <a href="/signup" class="bg-white text-indigo-700 font-bold py-3 px-6 rounded-md shadow-lg hover:bg-gray-100 transition duration-300">Get Started</a>
-                    <a href="/login" class="border-2 border-white text-white font-bold py-3 px-6 rounded-md hover:bg-white hover:text-indigo-700 transition duration-300">Sign In</a>
+                    <a href="/signup" class="bg-white text-indigo-700 font-bold py-3 px-6 rounded-md shadow-lg hover:bg-gray-100 transition-all duration-300 transform hover:scale-105">Get Started</a>
+                    <a href="/login" class="border-2 border-white text-white font-bold py-3 px-6 rounded-md hover:bg-white hover:text-indigo-700 transition-all duration-300 transform hover:scale-105">Sign In</a>
                 </div>
             </div>
         </div>
@@ -30,8 +86,8 @@
 
             <div class="mt-12 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
                 <!-- Book Card -->
-                <div th:each="book : ${featuredBooks}" class="flex flex-col bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300">
-                    <div class="flex-1 p-6">
+                <div th:each="book : ${featuredBooks}" class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+                    <div class="p-6">
                         <div class="flex items-center mb-4">
                             <div class="flex-shrink-0 bg-indigo-100 rounded-lg p-3">
                                 <i class="fas fa-book text-indigo-600 text-xl"></i>
@@ -49,12 +105,44 @@
                     <div class="bg-gray-50 px-6 py-3">
                         <div class="flex items-center justify-between">
                             <span class="text-sm font-medium text-green-600">Available</span>
-                            <a href="/login" class="text-sm font-medium text-indigo-600 hover:text-indigo-500">Login to Borrow</a>
+                            <a th:href="@{/login}" class="text-sm font-medium text-indigo-600 hover:text-indigo-500">Login to Borrow</a>
                         </div>
                     </div>
                 </div>
+
+                <!-- Add animation for cards appearing -->
+                <style>
+                    .book-card {
+                        animation: fadeIn 0.5s ease-in-out forwards;
+                    }
+                </style>
             </div>
         </div>
     </section>
 </main>
+
+<!-- Footer -->
+<footer class="bg-gray-800 text-white py-4 mt-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between">
+            <div>&copy; 2025 Library Management System</div>
+            <div>
+                <a href="#" class="text-gray-400 hover:text-white mx-2">Privacy</a>
+                <a href="#" class="text-gray-400 hover:text-white mx-2">Terms</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script>
+    // User dropdown toggle
+    const userMenuButton = document.getElementById('user-menu-button');
+    const userMenu = document.getElementById('user-menu');
+    if(userMenuButton) {
+        userMenuButton.addEventListener('click', function() {
+            userMenu.classList.toggle('hidden');
+        });
+    }
+</script>
+</body>
 </html>

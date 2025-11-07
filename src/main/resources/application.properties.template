@@ -1,0 +1,49 @@
+# =============================================
+# =             DATA SOURCE CONFIGURATION
+# =============================================
+
+# Use an in-memory H2 database for development
+spring.datasource.url=jdbc:h2:mem:testdb
+spring.datasource.driver-class-name=org.h2.Driver
+spring.datasource.username=sa
+spring.datasource.password=password
+
+# =============================================
+# =              JPA / HIBERNATE
+# =============================================
+
+# The SQL dialect makes Hibernate generate better SQL for H2 database
+spring.jpa.database-platform=org.hibernate.dialect.H2Dialect
+
+# This line is great for development! It drops and recreates the
+# database on every startup, so you always start fresh.
+spring.jpa.hibernate.ddl-auto=create-drop
+
+# This will show the SQL commands Hibernate is running in your console.
+spring.jpa.show-sql=true
+
+# =============================================
+# =                 H2 CONSOLE
+# =============================================
+
+# Enables the H2 web-based database console.
+# You can access it at: http://localhost:8080/h2-console
+spring.h2.console.enabled=true
+
+# =============================================
+# =              OAUTH2 / GOOGLE LOGIN
+# =============================================
+
+# IMPORTANT: Replace these with your actual Google Client ID and Secret
+# You get these from the Google Cloud Console.
+# NEVER commit your real secrets to version control!
+spring.security.oauth2.client.registration.google.client-id=YOUR_GOOGLE_CLIENT_ID
+spring.security.oauth2.client.registration.google.client-secret=YOUR_GOOGLE_CLIENT_SECRET
+
+# These are the 'permissions' you are asking for from the user's Google account.
+spring.security.oauth2.client.registration.google.scope=email,profile
+
+# This is the URL to your Google OAuth2 app configuration.
+spring.security.oauth2.client.provider.google.authorization-uri=https://accounts.google.com/o/oauth2/v2/auth
+spring.security.oauth2.client.provider.google.token-uri=https://oauth2.googleapis.com/token
+spring.security.oauth2.client.provider.google.user-info-uri=https://www.googleapis.com/oauth2/v2/userinfo

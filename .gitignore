@@ -12,11 +12,10 @@
 *.war
 *.ear
 *.nar
+*.tar.gz
+*.rar
 
-# Mobile Tools for Java(J2ME)
-*.mtj.tmp/
-
-# Virtual machine crash logs
+# virtual machine crash logs
 hs_err_pid*
 
 # Gradle
@@ -45,7 +44,6 @@ application-local.properties
 
 # OS generated files
 .DS_Store
-Thumbs.db
 
 # Secret Keys (IMPORTANT!)
 application.properties
